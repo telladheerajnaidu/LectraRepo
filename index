@@ -1,29 +1,41 @@
-import { useState, useEffect } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Numeric Value</title>
+    <style>
+        .recordfound {
+            font-size: 20px;
+            color: green;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
 
-export default function DynamicValue() {
-  const [value, setValue] = useState(generateRandomValue());
+    <h1>Dynamic Numeric Value Test</h1>
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setValue(generateRandomValue());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  function generateRandomValue() {
-    const num1 = Math.floor(Math.random() * 1000); // Random integer
-    const num2 = (Math.random() * 100).toFixed(2); // Random decimal number
-    const units = ["ms", "s", "KB", "MB", "GB"]; // Possible units
-    const unit = units[Math.floor(Math.random() * units.length)];
-    return `${num1} data (${num2} ${unit})`;
-  }
-
-  return (
-    <div style={{ textAlign: "center", marginTop: "20%", fontSize: "24px" }}>
-      <h1>Dynamic Value Generator</h1>
-      <div className="recordfound" style={{ fontWeight: "bold", color: "blue" }}>
-        {value}
-      </div>
+    <div id="content">
+        <div class="recordfound" id="record">
+            <!-- Dynamic value will be inserted here -->
+        </div>
     </div>
-  );
-}
+
+    <script>
+        // Function to generate random numeric value followed by a pattern (number, decimal, unit)
+        function generateDynamicValue() {
+            let number = Math.floor(Math.random() * 1000); // Random number
+            let decimal = (Math.random() * 100).toFixed(2); // Random decimal number
+            let unit = ['kg', 'm', 'cm', 's', 'lbs'][Math.floor(Math.random() * 5)]; // Random unit
+
+            let dynamicValue = `${number}.${decimal} (${unit})`;
+            document.getElementById("record").textContent = dynamicValue;
+        }
+
+        // Generate the value dynamically when the page loads
+        window.onload = generateDynamicValue;
+    </script>
+
+</body>
+</html>
