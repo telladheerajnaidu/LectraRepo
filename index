@@ -1,56 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regex Capture Test</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        .recordfound { font-size: 20px; color: blue; margin: 10px; }
-    </style>
-</head>
-<body>
+import { useState, useEffect } from "react";
 
-    <h2>Dynamic Record Capture</h2>
-    <div class="recordfound"> 1000 ExampleText (10.5 ms) </div>
-    <div class="recordfound"> 2000 AnotherText (20.8 ms) </div>
+export default function DynamicValue() {
+  const [value, setValue] = useState(generateRandomValue());
 
-    <script>
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setValue(generateRandomValue());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-        function updateValues() {
-            const elements = document.querySelectorAll('.recordfound');
+  function generateRandomValue() {
+    const num1 = Math.floor(Math.random() * 1000); // Random integer
+    const num2 = (Math.random() * 100).toFixed(2); // Random decimal number
+    const units = ["ms", "s", "KB", "MB", "GB"]; // Possible units
+    const unit = units[Math.floor(Math.random() * units.length)];
+    return `${num1} data (${num2} ${unit})`;
+  }
 
-            elements.forEach((el) => {
-                let randomNumber = getRandomInt(1000, 9999);
-                let randomMs = (Math.random() * 100).toFixed(2);
-                let randomText = ["ExampleText", "AnotherText", "TestRecord", "SampleData"][getRandomInt(0, 3)];
-                
-                el.innerHTML = `${randomNumber} ${randomText} (${randomMs} ms)`;
-            });
-        }
-
-        function captureValues() {
-            const regex = /([0-9]+[^"=\(]+\([0-9\.]+[ ][^ \)]+\))/;
-            const elements = document.querySelectorAll('.recordfound');
-
-            elements.forEach(el => {
-                const match = el.innerHTML.match(regex);
-                if (match) {
-                    console.log("Captured Value:", match[1]);
-                    // Set an indicator or use the captured value as needed
-                }
-            });
-        }
-
-        // Update values every 2 seconds and capture them
-        setInterval(() => {
-            updateValues();
-            captureValues();
-        }, 2000);
-    </script>
-
-</body>
-</html>
+  return (
+    <div style={{ textAlign: "center", marginTop: "20%", fontSize: "24px" }}>
+      <h1>Dynamic Value Generator</h1>
+      <div className="recordfound" style={{ fontWeight: "bold", color: "blue" }}>
+        {value}
+      </div>
+    </div>
+  );
+}
