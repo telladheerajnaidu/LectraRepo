@@ -18,7 +18,7 @@
 
     <div id="content">
         <div class="recordfound" id="record">
-            <!-- Dynamic value will be inserted here -->
+            <!-- Placeholder for dynamic value -->
         </div>
     </div>
 
@@ -30,7 +30,7 @@
             let unit = ['kg', 'm', 'cm', 's', 'lbs'][Math.floor(Math.random() * 5)]; // Random unit
 
             let dynamicValue = `${number}.${decimal} (${unit})`;
-            document.getElementById("record").textContent = dynamicValue;
+            document.getElementById("record").textContent = dynamicValue;  // Insert dynamically
         }
 
         // Generate the value dynamically when the page loads
