@@ -11,45 +11,21 @@
             margin-top: 20px;
         }
     </style>
-</head>
-<body>
-
-    <h1>Dynamic Numeric Value Test</h1>
-
-    <div id="content">
-        <div class="recordfound" id="record">
-            <!-- Placeholder for dynamic value -->
-        </div>
-    </div>
-
     <script>
-        // Function to generate random numeric value followed by a pattern (number, decimal, unit)
+        // Function to generate random numeric value before HTML is rendered
         function generateDynamicValue() {
             let number = Math.floor(Math.random() * 1000); // Random number
             let decimal = (Math.random() * 100).toFixed(2); // Random decimal number
             let unit = ['kg', 'm', 'cm', 's', 'lbs'][Math.floor(Math.random() * 5)]; // Random unit
-
-            let dynamicValue = `${number}.${decimal} (${unit})`;
-            document.getElementById("record").textContent = dynamicValue;  // Insert dynamically
+            return `${number}.${decimal} (${unit})`;
         }
 
-        // Function to load the dynamic value before inserting content
-        function loadContent() {
-            // Generate dynamic value first
-            generateDynamicValue();
-
-            // Insert content after dynamic value is created
-            setTimeout(function() {
-                document.getElementById("content").style.display = "block";  // Show the content after delay
-            }, 500); // Adjust delay as needed
-        }
-
-        // Start by hiding content initially
-        document.getElementById("content").style.display = "none";
-
-        // Call loadContent() when the page has finished loading
-        window.onload = loadContent;
+        // Inject the dynamic value before the page renders
+        document.write('<style>#record { font-size: 20px; color: green; margin-top: 20px; }</style>');
+        document.write('<h1>Dynamic Numeric Value Test</h1>');
+        document.write('<div id="content"><div class="recordfound" id="record">' + generateDynamicValue() + '</div></div>');
     </script>
-
+</head>
+<body>
 </body>
 </html>
